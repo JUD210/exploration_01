@@ -1,125 +1,155 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp()); // 앱 실행 진입점
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return const MaterialApp(
+      home: JellyfishClassifierPage(), // 메인 페이지 설정
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class JellyfishClassifierPage extends StatefulWidget {
+  const JellyfishClassifierPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  JellyfishClassifierPageState createState() =>
+      JellyfishClassifierPageState(); // StatefulWidget의 State 생성
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class JellyfishClassifierPageState extends State<JellyfishClassifierPage> {
+  String result = ""; // 예측 결과를 저장하는 변수
+  final TextEditingController urlController =
+      TextEditingController(); // URL 입력 필드 제어용 컨트롤러
+  final String defaultUrl = "http://127.0.0.1:12530"; // 기본 URL, 실제 서버 주소로 변경 필요
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final ImagePicker _picker = ImagePicker();
+  File? _image;
 
   @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+  void initState() {
+    super.initState();
+
+    if (urlController.text.isEmpty) {
+      urlController.text = defaultUrl;
+    }
+  }
+
+  // 이미지 선택 함수
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    } else {
+      // 사용자가 이미지를 선택하지 않음
+    }
+  }
+
+  // 서버에 이미지를 업로드하고 예측 결과를 받아오는 함수
+  Future<void> fetchPrediction() async {
+    if (_image == null) {
+      setState(() {
+        result = "먼저 이미지를 선택해주세요.";
+      });
+      return;
+    }
+
+    try {
+      final String enteredUrl = urlController.text;
+      final Uri uri = Uri.parse("$enteredUrl/predict");
+
+      final request = http.MultipartRequest('POST', uri);
+      request.headers.addAll({
+        'ngrok-skip-browser-warning': '69420',
+      });
+
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'file',
+          _image!.path,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      );
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data =
+            jsonDecode(response.body) as Map<String, dynamic>;
+        setState(() {
+          final predictions = data['predictions'] as Map<String, dynamic>;
+          // 각 클래스와 확률을 표시
+          result =
+              predictions.entries.map((e) => '${e.key}: ${e.value}').join('\n');
+        });
+      } else {
+        setState(() {
+          result = "데이터를 가져오는데 실패했습니다. 상태 코드: ${response.statusCode}";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        result = "오류 발생: $e";
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("해파리 분류기"), // 앱의 제목을 설정함
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _image == null
+                  ? const Text("이미지가 선택되지 않았습니다.")
+                  : Image.file(
+                      _image!,
+                      width: 300,
+                      height: 300,
+                    ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('이미지 선택'),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: urlController, // URL 입력 필드
+                decoration:
+                    const InputDecoration(labelText: "서버 URL 입력"), // 필드의 라벨
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: fetchPrediction,
+                child: const Text("예측 실행"),
+              ),
+              const SizedBox(height: 40),
+              Text(
+                result,
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )),
+        ));
   }
 }
