@@ -1,7 +1,7 @@
 tf_flowers
 *.h5
 *.keras
-checkpoint* 
+checkpoint*
 
 _*
 .DS_STORE

@@ -112,7 +112,7 @@ class JellyfishClassifierPageState extends State<JellyfishClassifierPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("해파리 분류기"), // 앱의 제목을 설정함
+          title: const Text("꽃 분류기"), // 앱의 제목을 설정함
         ),
         body: Center(
           child: SingleChildScrollView(
