@@ -1,6 +1,9 @@
+tf_flowers
+*.h5
+*.keras
+
 _*
 .DS_STORE
-tf_flowers
 
 ### Android Studio
 # Miscellaneous
