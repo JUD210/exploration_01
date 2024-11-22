@@ -1,8 +1,3 @@
-_*
-.DS_STORE
-tf_flowers
-
-### Android Studio
 # Miscellaneous
 *.class
 *.log
