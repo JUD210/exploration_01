@@ -4,7 +4,7 @@
 
 ## 루브릭
 
-![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image.png)
+![image.png](readme_data/image.png)
 
 ```
 평가문항 -> 상세기준
@@ -23,11 +23,11 @@
 
 - [x]  **1. 주어진 문제를 해결하는 완성된 코드가 제출되었나요? (완성도)**
     - 문제에서 요구하는 최종 결과물이 첨부되었는지 확인
-    - 문제를 해결하는 완성된 코드란 프로젝트 루브릭 3개 중 2개, 
+    - 문제를 해결하는 완성된 코드란 프로젝트 루브릭 3개 중 2개,
     퀘스트 문제 요구조건 등을 지칭
         - 해당 조건을 만족하는 부분의 코드 및 결과물을 캡쳐하여 사진으로 첨부
       ![image](https://github.com/user-attachments/assets/ea44b23b-079c-4a5b-98a3-eefec292fe09)
-    
+
 
 - [x]  **2. 프로젝트에서 핵심적인 부분에 대한 설명이 주석(닥스트링) 및 마크다운 형태로 잘 기록되어있나요? (설명)**
     - [x]  모델 선정 이유
@@ -37,7 +37,7 @@
           ![image](https://github.com/user-attachments/assets/7602fb5c-951b-4c8a-ba99-681dabfbc991)
 
     - [x]  데이터 전처리 이유 또는 방법 설명
-        
+
 
 - [x]  **3. 체크리스트에 해당하는 항목들을 수행하였나요? (문제 해결)**
     - [x]  데이터를 분할하여 프로젝트를 진행했나요? (train, validation, test 데이터로 구분)
@@ -72,24 +72,24 @@
 
 - 용어 정리: Dataset, batch size, iteration, epoch
 
-![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%201.png)
+![image.png](readme_data/image%201.png)
 
 - `VGG16` 모델
 
-![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%202.png)
+![image.png](readme_data/image%202.png)
 
 - `EfficientNetB0` 모델
 
-![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%203.png)
+![image.png](readme_data/image%203.png)
 
 - `MobileNetV2` 모델
 
-![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%204.png)
+![image.png](readme_data/image%204.png)
 
 # Simple CNN 모델 1 : Conv2D - MaxPooling - Flatten - Dense
 
 - 구조
-    
+
     ```python
     model = Sequential([
         Conv2D(filters=16, kernel_size=3, padding='same', activation='relu', input_shape=(160, 160, 3)),
@@ -103,11 +103,11 @@
         Dense(units=2, activation='softmax')
     ])
     ```
-    
+
 - 성능
-    
-    ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%205.png)
-    
+
+    ![image.png](readme_data/image%205.png)
+
     ```bash
     Epoch 1/20
     92/92 [==============================] - 3s 29ms/step - loss: 0.2653 - accuracy: 0.9264 - val_loss: 1.0021 - val_accuracy: 0.6403
@@ -150,15 +150,15 @@
     Epoch 20/20
     92/92 [==============================] - 3s 30ms/step - loss: 0.0147 - accuracy: 0.9959 - val_loss: 1.8493 - val_accuracy: 0.6403
     ```
-    
+
 
 # Simple CNN 모델 2 : dropout 추가
 
 - 구조
-    
+
     ```python
     from tensorflow.keras.layers import Dropout
-    
+
     model = Sequential([
         Conv2D(filters=16, kernel_size=3, padding='same', activation='relu', input_shape=(160, 160, 3)),
         MaxPooling2D(),
@@ -173,13 +173,13 @@
         Dropout(0.5),  # 완전 연결층 드롭아웃
         Dense(units=5, activation='softmax')  # 클래스 수 5개
     ])
-    
+
     ```
-    
+
 - 성능
-    
-    ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%206.png)
-    
+
+    ![image.png](readme_data/image%206.png)
+
     ```bash
     Epoch 1/20
     92/92 [==============================] - 4s 31ms/step - loss: 1.5061 - accuracy: 0.3464 - val_loss: 1.2379 - val_accuracy: 0.5341
@@ -222,108 +222,108 @@
     Epoch 20/20
     92/92 [==============================] - 3s 28ms/step - loss: 0.4586 - accuracy: 0.8423 - val_loss: 1.0076 - val_accuracy: 0.6322
     ```
-    
+
 
 # Simple CNN은 너무 구리다!! 빨리 전이학습으로 넘어가자.
 
 - (GPT-4o) 꽃 분류의 베이스 모델을 VGG16 로 가져와서, 전이학습 시킬까 하는데, VGG16 보다 좋은 모델이 있을까?
-    
+
     꽃 분류와 같은 이미지 분류 작업에서 **VGG16**은 안정적이고 간단히 전이 학습을 시도하기에 적합한 모델이야. 하지만 최신 연구에서는 VGG16보다 성능이 더 뛰어나고 경량화된 모델이 많이 등장했어. 아래에서 VGG16과 비교해 더 나은 모델을 추천할게. 😊
-    
+
     ---
-    
+
     ### **VGG16의 장점과 단점**
-    
+
     ### 장점:
-    
+
     1. **안정성**: 잘 설계된 구조로 작은 데이터셋에서도 좋은 성능.
     2. **사용 용이성**: Keras와 같은 라이브러리에서 손쉽게 사용 가능.
     3. **풍부한 전이 학습 사례**: 많은 작업에서 사용된 역사가 있어 적용이 간단.
-    
+
     ### 단점:
-    
+
     1. **모델 크기**: 가중치 파일 크기가 크고, 메모리 사용량이 많음.
     2. **연산량**: Convolution 연산이 많아 학습과 추론 속도가 느림.
     3. **최신 모델 대비 성능 부족**: 최신 경량화 모델보다 성능이 떨어질 수 있음.
-    
+
     ---
-    
+
     ### **추천 모델**
-    
+
     아래는 꽃 분류와 같은 **작은 데이터셋**에서 VGG16을 대체할 수 있는 모델이야.
-    
+
     ### 1. **MobileNetV2**
-    
+
     - **장점**:
         - 경량화된 모델로 **빠른 추론** 가능.
         - 적은 연산량과 메모리 사용량으로 모바일 디바이스에서도 사용 가능.
         - 작은 데이터셋에서도 성능이 좋음.
     - **단점**:
         - VGG16에 비해 학습 초기 성능이 낮을 수 있음.
-    
+
     ```python
     from tensorflow.keras.applications import MobileNetV2
-    
+
     base_model = MobileNetV2(input_shape=(160, 160, 3), include_top=False, weights='imagenet')
-    
+
     ```
-    
+
     ---
-    
+
     ### 2. **EfficientNet**
-    
+
     - **장점**:
         - **SOTA(State-of-the-Art)** 모델로, 정확도와 효율성을 모두 고려.
         - 다양한 크기 버전(`EfficientNetB0`, `B1`, ...) 제공.
         - 높은 분류 성능을 제공하면서도 연산량이 적음.
     - **단점**:
         - 학습 초기 설정이 까다로울 수 있음.
-    
+
     ```python
     from tensorflow.keras.applications import EfficientNetB0
-    
+
     base_model = EfficientNetB0(input_shape=(160, 160, 3), include_top=False, weights='imagenet')
-    
+
     ```
-    
+
     ---
-    
+
     ### 3. **ResNet50**
-    
+
     - **장점**:
         - 깊은 네트워크로 복잡한 데이터에서도 뛰어난 성능.
         - *스킵 연결(skip connection)**을 통해 기울기 소실 문제 해결.
     - **단점**:
         - MobileNet이나 EfficientNet보다 연산량이 많아 속도가 느림.
-    
+
     ```python
     from tensorflow.keras.applications import ResNet50
-    
+
     base_model = ResNet50(input_shape=(160, 160, 3), include_top=False, weights='imagenet')
-    
+
     ```
-    
+
     ---
-    
+
     ### 4. **InceptionV3**
-    
+
     - **장점**:
         - 효율적인 모델 구조로 정확도가 높음.
         - 다양한 크기의 필터를 동시에 학습하여 다양한 패턴을 학습 가능.
     - **단점**:
         - MobileNetV2보다 연산량이 많고, 설정이 다소 복잡할 수 있음.
-    
+
     ```python
     from tensorflow.keras.applications import InceptionV3
-    
+
     base_model = InceptionV3(input_shape=(160, 160, 3), include_top=False, weights='imagenet')
-    
+
     ```
-    
+
     ---
-    
+
     ### **비교 및 추천**
-    
+
     | 모델 | 정확도 | 연산량 | 모델 크기 | 모바일 친화성 | 학습 난이도 |
     | --- | --- | --- | --- | --- | --- |
     | **VGG16** | 중상 | 높음 | 큼 | 낮음 | 쉬움 |
@@ -331,31 +331,31 @@
     | **EfficientNet** | 상 | 낮음 | 중 | 높음 | 중간 |
     | **ResNet50** | 상 | 중간 | 중 | 중간 | 중간 |
     | **InceptionV3** | 상 | 중간 | 중 | 낮음 | 중간 |
-    
+
     ---
-    
+
     ### **최종 추천**
-    
+
     1. **효율성과 정확도**를 모두 원한다면:
         - **EfficientNetB0**: 경량화와 높은 성능.
     2. **빠르고 경량화된 모델**을 원한다면:
         - **MobileNetV2**.
     3. **더 깊고 강력한 성능**이 필요하다면:
         - **ResNet50** 또는 **InceptionV3**.
-    
+
     ---
-    
+
     ### **전이 학습 예제 코드**
-    
+
     ```python
     from tensorflow.keras.applications import EfficientNetB0
     from tensorflow.keras.models import Sequential
     from tensorflow.keras.layers import Flatten, Dense, Dropout
-    
+
     # EfficientNetB0 불러오기
     base_model = EfficientNetB0(input_shape=(160, 160, 3), include_top=False, weights='imagenet')
     base_model.trainable = False  # Pre-trained weights freezing
-    
+
     # 모델 구성
     model = Sequential([
         base_model,
@@ -364,20 +364,20 @@
         Dropout(0.5),
         Dense(5, activation='softmax')  # 꽃 분류 클래스 수에 맞춤
     ])
-    
+
     # 모델 컴파일
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-    
+
     ```
-    
+
     ---
-    
+
     ### **결론**
-    
+
     `VGG16`도 나쁘지 않지만, 더 경량화되고 최신 구조인 **`EfficientNetB0`** 또는 **`MobileNetV2`**를 추천할게!
-    
+
     이 모델들은 속도, 정확도, 메모리 사용 면에서 더 나은 선택이 될 가능성이 커. 😊
-    
+
 
 **결론**
 
@@ -388,84 +388,84 @@
 # VGG 16 기반 모델
 
 - 구조
-    
+
     ```bash
-    
+
     ```
-    
+
 - 시각화
-    
-    ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%207.png)
-    
+
+    ![image.png](readme_data/image%207.png)
+
 - 성능
-    
+
     ```bash
-    
+
     ```
-    
-    ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%208.png)
-    
+
+    ![image.png](readme_data/image%208.png)
+
 
 # EfficientNetB0 기반 모델
 
-[efficientnetb0_model.h5](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/efficientnetb0_model.h5)
+[efficientnetb0_model.h5](readme_data/efficientnetb0_model.h5)
 
 - 구조
-    
+
     ```python
-    # @ EfficientNetB0 
+    # @ EfficientNetB0
     from tensorflow.keras.applications import EfficientNetB0
     IMG_SHAPE = (IMG_SIZE, IMG_SIZE, 3)
-    
+
     # @ Create the base model from the pre-trained model EfficientNetB0
     base_model_effi = tf.keras.applications.EfficientNetB0(input_shape=IMG_SHAPE,
                                              include_top=False,
                                              weights='imagenet')
-                                             
+
     image_batch.shape
-    
+
     feature_batch = base_model_effi(image_batch) # @ EfficientNetB0
-    feature_batch.shape 
-    
-    base_model_effi.summary() # @ EfficientNetB0
-    
     feature_batch.shape
-    
+
+    base_model_effi.summary() # @ EfficientNetB0
+
+    feature_batch.shape
+
     global_average_layer = tf.keras.layers.GlobalAveragePooling2D()
     print("슝~")
-    
+
     feature_batch_average = global_average_layer(feature_batch)
     print(feature_batch_average.shape)
-    
+
     # dense layer에는 unit과 activation 2개의 매개변수만 사용해주세요.
     # unit의 값은 위에서 global_average_layer를 통과했을 때의 값을 생각해보세요.
     # 활성화 함수는 ReLU를 사용합니다.
-    # 
+    #
     # units	Positive integer, dimensionality of the output space.
     # activation	Activation function to use. If you don't specify anything, no activation is applied (ie. "linear" activation: a(x) = x).
-    # 
+    #
     # [[YOUR CODE]]
     dense_layer = tf.keras.layers.Dense(
         units=feature_batch_average.shape[-1],
         activation='relu'
         )
-    
+
     # unit은 우리가 분류하고 싶은 class를 생각해보세요.
     # 활성화 함수는 Softmax를 사용합니다.
-    # 
+    #
     # [[YOUR CODE]]
     prediction_layer = tf.keras.layers.Dense(
         units=5,   # @ 2->5로 수정
         activation='softmax'
         )
-    
+
     # feature_batch_averag가 dense_layer를 거친 결과가 다시 prediction_layer를 거치게 되면
-    prediction_batch = prediction_layer(dense_layer(feature_batch_average))  
+    prediction_batch = prediction_layer(dense_layer(feature_batch_average))
     print(prediction_batch.shape)
-    
+
     base_model_effi.trainable = False  # @ EfficientNetB0
     print("슝~")
-    
+
     model = tf.keras.Sequential([
       base_model_effi,   # @ EfficientNetB0
       global_average_layer,
@@ -473,47 +473,47 @@
       prediction_layer
     ])
     print("슝~")
-    
+
     model.summary()
-    
+
     base_learning_rate = 0.0001
     # [[YOUR CODE]]
     model.compile(optimizer=tf.keras.optimizers.RMSprop(learning_rate=learning_rate),
                   loss=tf.keras.losses.sparse_categorical_crossentropy,
                   metrics=['accuracy'])
-    
+
     validation_steps=10   # @ 20 -> 10 으로 수정
     loss0, accuracy0 = model.evaluate(validation_batches, steps = validation_steps)
-    
+
     print("initial loss: {:.2f}".format(loss0))
     print("initial accuracy: {:.2f}".format(accuracy0))
-    
+
     # Q. 직접 모델을 학습하는 코드를 작성하세요.
-    
+
     EPOCHS = 5   # 이번에는 이전보다 훨씬 빠르게 수렴되므로 5Epoch이면 충분합니다.
     # [[YOUR CODE]]
     history = model.fit(train_batches,
                         epochs=EPOCHS,
                         validation_data=validation_batches)
-                        
+
     # @ Epoch 늘려서 (5 + 10)
     EPOCHS = 10
     history = model.fit(train_batches,
                         epochs=EPOCHS,
                         validation_data=validation_batches)
-    
+
     # @ Epoch 늘려서 (5 + 10 +5)
     EPOCHS = 5
     history = model.fit(train_batches,
                         epochs=EPOCHS,
                         validation_data=validation_batches)
-    
+
     ```
-    
+
 - 성능
-    
-    ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%209.png)
-    
+
+    ![image.png](readme_data/image%209.png)
+
 
 0.00001
 
@@ -561,12 +561,12 @@ Epoch 10/10
 for images, labels in train_batches.take(1):
     print(labels.dtype)
     print(labels.numpy())
-    
+
 # 전처리된 이미지 확인
 for images, labels in train_batches.take(1):
     print(images.numpy().min(), images.numpy().max())
-    
-    
+
+
 # 데이터셋 구조 확인
 print(train_batches.element_spec)
 
@@ -581,22 +581,22 @@ unique, counts = np.unique(label_list, return_counts=True)
 print(dict(zip(unique, counts)))
 ```
 
-![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%2010.png)
+![image.png](readme_data/image%2010.png)
 
 # MobileNetV2 기반 모델
 
 - 구조
-    
+
     ```bash
-    
+
     ```
-    
+
 - 성능
-    
+
     ```bash
-    
+
     ```
-    
+
 
 # 최종 모델 선택 : ?
 
@@ -619,13 +619,13 @@ print(dict(zip(unique, counts)))
 - 민혁
     - 데이터셋을 받는 방법 중, `tfds.load( ... , download=True)` 를 사용함으로써 로컬에 받는 게 제일 편하다는 것을 깨달음.
         - 직접 다운받아서 활용하려고 하니, 다음과 같은 에러가 떴다.
-            
-            `AssertionError: Dataset tf_flowers: could not find data in ../datasets_origin/. Please make sure to call dataset_builder.download_and_prepare(), or pass download=True to tfds.load() before trying to access the tf.data.Dataset object.` 
-            
+
+            `AssertionError: Dataset tf_flowers: could not find data in ../datasets_origin/. Please make sure to call dataset_builder.download_and_prepare(), or pass download=True to tfds.load() before trying to access the tf.data.Dataset object.`
+
     - 우찬 is GOAT
-        
-        ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%2011.png)
-        
+
+        ![image.png](readme_data/image%2011.png)
+
 - 고은비
     - 모델 학습이 생각보다 어려운 것 같습니다.ㅠㅠ
 - 임만순
@@ -645,13 +645,13 @@ print(dict(zip(unique, counts)))
                 - 알고 보니, `Dense(units=2, activation='softmax')` 를 그대로 쓰고 앉아 있었다. `units=5` 로 해결
             - `VGG16` 또는 기타 발전된 모델이 아닌 그냥 쌩 `Simple CNN`가지고 하이퍼파라미터 수정하면서 성능 개선을 하고 앉아 있었다.
     - 플러터 완성!!!
-        
-        ![image.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/image%2012.png)
-        
+
+        ![image.png](readme_data/image%2012.png)
+
     - 근데, 파이썬 서버 모델 로딩 실패로 멸망
-        
-        ![Screenshot 2024-11-22 at 17.01.37.png](Exploration%2001%20Project%20-%20tf_flowers%20%E1%84%86%E1%85%B5%E1%86%AB%E1%84%92%E1%85%A7%E1%86%A8,%20%E1%84%80%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%87%2014639ab0e159803fb6adeacad73908e0/Screenshot_2024-11-22_at_17.01.37.png)
-        
+
+        ![Screenshot 2024-11-22 at 17.01.37.png](readme_data/Screenshot_2024-11-22_at_17.01.37.png)
+
 - 고은비
     - 이유를 하나씩 찾아가면서 accuracy를 높이려고 하니,, 시간이 부족합니다ㅠㅠ 할 수 있는한 해보았는데…
 - 임만순
